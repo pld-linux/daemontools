@@ -1,4 +1,3 @@
-# $Revision: 1.2 $
 Summary:	DJB daemontools
 Name:		daemontools
 Version:	0.53
