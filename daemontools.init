@@ -2,7 +2,7 @@
 #
 # svscan	svscan (scan and run services)
 #
-# chkconfig:	345 66 45
+# chkconfig:    345 14 89	
 #
 # description:	svscan (scan and run services) is a server part of the daemontools suite.
 #
