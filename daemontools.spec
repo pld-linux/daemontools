@@ -10,6 +10,7 @@ Group(pl):	Sieciowe/Administracyjne
 Source0:	http://cr.yp.to/%{name}/%{name}-%{version}.tar.gz
 Source1:	ftp://ftp.innominate.org/pub/pape/djb/%{name}-%{version}-man.tar.gz
 Source2:	%{name}.sysconfig
+Source3:	%{name}.init
 Patch0:		%{name}-time.patch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -40,10 +41,9 @@ robi rotating logów do limitu miejsca na dysku. Je¿eli dysk jest
 zape³niony, robi pauzê i próbuje ponownie, bez strat danych.
 
 %prep
-tar zxf %{SOURCE1}
-
 %setup -q
 %patch0 -p1
+tar zxf %{SOURCE1}
 
 %build
 echo %{_bindir} >conf-home
@@ -59,7 +59,7 @@ $RPM_BUILD_ROOT%{_sysconfdir}/{rc.d/init.d,sysconfig} \
 install envdir envuidgid fghack multilog setlock setuidgid softlimit \
 	supervise supervise svc svok svscan svstat tai64n tai64nlocal \
 	$RPM_BUILD_ROOT%{_sbindir}
-install ../%{name}-%{version}-man/*.8 $RPM_BUILD_ROOT%{_mandir}/man8
+install %{name}-%{version}-man/*.8* $RPM_BUILD_ROOT%{_mandir}/man8
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/svscan
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/svscan
 
