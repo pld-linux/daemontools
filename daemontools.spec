@@ -1,5 +1,5 @@
 Summary:	D. J. Bernstein daemontools
-Summary(pl):	daemontools'y D. J. Bernstein'a
+Summary(pl):	daemontools D. J. Bernstein
 Name:		daemontools
 Version:	0.70
 Release:	4
@@ -12,6 +12,7 @@ Source1:	ftp://ftp.innominate.org/pub/pape/djb/%{name}-%{version}-man.tar.gz
 Source2:	%{name}.sysconfig
 Source3:	%{name}.init
 Patch0:		%{name}-time.patch
+Prereq:		/sbin/chkconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -53,7 +54,7 @@ echo %{_bindir} >conf-home
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man8} \
-$RPM_BUILD_ROOT%{_sysconfdir}/{rc.d/init.d,sysconfig} \
+	$RPM_BUILD_ROOT%{_sysconfdir}/{rc.d/init.d,sysconfig} \
 	$RPM_BUILD_ROOT/var/{run/service,lib/service}
 
 install envdir envuidgid fghack multilog setlock setuidgid softlimit \
