@@ -86,7 +86,7 @@ fi
 %files
 %defattr(644,root,root,755)
 %doc {CHANGES,README,TODO,VERSION}.gz
-%attr(644,root,root) %{_mandir}/*
+%attr(644,root,root) %{_mandir}/man8/*
 %attr(755,root,root) %{_sbindir}/*
 %attr(700,root,root) /var/run/service
 %attr(700,root,root) /var/lib/service
