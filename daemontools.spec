@@ -2,7 +2,7 @@ Summary:	D. J. Bernstein daemontools
 Summary(pl):	daemontools D. J. Bernstein
 Name:		daemontools
 Version:	0.70
-Release:	5
+Release:	6
 License:	D. J. Bernstein
 Group:		Networking/Admin
 Source0:	http://cr.yp.to/%{name}/%{name}-%{version}.tar.gz
@@ -57,7 +57,7 @@ install -d $RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man8} \
 	$RPM_BUILD_ROOT/var/lib/service $RPM_BUILD_ROOT/service
 
 install envdir envuidgid fghack multilog setlock setuidgid softlimit \
-	supervise supervise svc svok svscan svstat tai64n tai64nlocal \
+	supervise svc svok svscan svstat tai64n tai64nlocal \
 	$RPM_BUILD_ROOT%{_sbindir}
 install %{name}-%{version}-man/*.8* $RPM_BUILD_ROOT%{_mandir}/man8
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/svscan
