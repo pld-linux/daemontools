@@ -71,7 +71,7 @@ rm -rf $RPM_BUILD_ROOT
 if [ -f /var/lock/subsys/svscan ]; then
 	/etc/rc.d/init.d/svscan restart >&2
 else
-	echo "Execute \"/etc/rc.d/init.d/svscan\" to start svscan daemon."
+	echo "Execute \"/etc/rc.d/init.d/svscan start\" to start svscan daemon."
 fi
 
 %preun
