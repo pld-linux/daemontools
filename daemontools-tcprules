@@ -1,0 +1,12 @@
+-include Makefile.*
+.PHONY: all 
+.SUFFIXES: .cdb
+
+all: $(CDBS) 
+
+%.cdb:: %
+	@echo + Rebuilding $*.cdb from $<; \
+	PERM=$$(stat -c %a $@ 2>/dev/null); OWNER=$$(stat -c %U:%G $@ 2>/dev/null); \
+	umask 007; \
+	tcprules $@ $@.tmp < $<; \
+	[ -z "$$PERM" ] || chmod $$PERM $@; [ -z "$$OWNER" ] || chown $$OWNER $@;
