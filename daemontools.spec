@@ -5,8 +5,6 @@ Version:	0.70
 Release:	5
 License:	D. J. Bernstein
 Group:		Networking/Admin
-Group(de):	Netzwerkwesen/Administration
-Group(pl):	Sieciowe/Administracyjne
 Source0:	http://cr.yp.to/%{name}/%{name}-%{version}.tar.gz
 Source1:	ftp://ftp.innominate.org/pub/pape/djb/%{name}-%{version}-man.tar.gz
 Source2:	%{name}.sysconfig
