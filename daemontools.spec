@@ -69,20 +69,10 @@ gzip -9nf CHANGES README TODO
 rm -rf $RPM_BUILD_ROOT
 
 %post
-/sbin/chkconfig --add svscan
-if [ -f /var/lock/subsys/svscan ]; then
-	/etc/rc.d/init.d/svscan restart >&2
-else
-	echo "Execute \"/etc/rc.d/init.d/svscan\" to start svscan daemon."
-fi
+NAME=svscan; DESC="svscan daemon"; %chkconfig_add
 
 %preun
-if [ "$1" = "0" ]; then
-	if [ -f /var/lock/subsys/svscan ]; then
-		/etc/rc.d/init.d/svscan stop >&2
-	fi
-	/sbin/chkconfig --del svscan
-fi
+NAME=svscan; %chkconfig_del
 
 %files
 %defattr(644,root,root,755)
