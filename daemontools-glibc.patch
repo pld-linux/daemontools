@@ -1,0 +1,10 @@
+--- error.h~	Mon Mar 31 12:01:59 2003
++++ error.h	Mon Mar 31 12:02:25 2003
+@@ -1,5 +1,7 @@
+ /* Public domain. */
+ 
++#include <errno.h>
++
+ #ifndef ERROR_H
+ #define ERROR_H
+ 
