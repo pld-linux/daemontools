@@ -2,7 +2,7 @@ Summary:	D. J. Bernstein daemontools
 Summary(pl):	daemontools D. J. Bernsteina
 Name:		daemontools
 Version:	0.76
-Release:	1
+Release:	2
 License:	DJB (http://cr.yp.to/distributors.html)
 Group:		Networking/Admin
 Source0:	http://cr.yp.to/%{name}/%{name}-%{version}.tar.gz
@@ -11,13 +11,18 @@ Source1:	http://smarden.org/pape/djb/manpages/%{name}-%{version}-man.tar.gz
 # Source1-md5:	2d3858a48f293c87202f76cd883438ee
 Source2:	%{name}.sysconfig
 Source3:	%{name}.init
+Source4:	%{name}-tcprules
 Patch0:		%{name}-glibc.patch
 URL:		http://cr.yp.to/daemontools.html
 Requires(post,preun):	/sbin/chkconfig
+# make and stat from coreutils are for building tcprules
+Requires:	make
+Requires:	coreutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # /etc/service or /var/lib/service? (also in .sysconfig)
 %define		servicedir	/service
+%define 	tcprules 	/etc/tcprules.d
 
 %description
 daemontools is a collection of tools for managing UNIX services.
@@ -62,7 +67,7 @@ package/compile
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man8} \
 	$RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig} \
-	$RPM_BUILD_ROOT{/var/lib/service,%{servicedir}}
+	$RPM_BUILD_ROOT{/var/lib/service,%{servicedir},%{tcprules}}
 
 # install manuals
 install %{name}-man/*.8* $RPM_BUILD_ROOT%{_mandir}/man8
@@ -77,6 +82,8 @@ install envdir envuidgid fghack multilog pgrphack \
 # install rc & sysconfig files
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/svscan
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/svscan
+
+install %{SOURCE4} $RPM_BUILD_ROOT%{tcprules}/Makefile
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -102,6 +109,7 @@ fi
 %doc %{name}-%{version}/{package/README,src/{CHANGES,TODO}}
 %attr(755,root,root) %{_sbindir}/*
 %attr(700,root,root) %{servicedir}
+%{tcprules}
 %attr(700,root,root) /var/lib/service
 %attr(754,root,root) /etc/rc.d/init.d/svscan
 %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/svscan
