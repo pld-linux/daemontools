@@ -43,7 +43,7 @@ zape³niony, robi pauzê i próbuje ponownie, bez strat danych.
 %prep 
 %setup -q -n admin/%{name}-%{version}
 cd src
-%patch1 
+%patch0
 cd ..
 
 tar zxf %{SOURCE1}
