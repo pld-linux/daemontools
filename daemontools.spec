@@ -6,7 +6,9 @@ Release:	1
 License:	DJB (http://cr.yp.to/distributors.html)
 Group:		Networking/Admin
 Source0:	http://cr.yp.to/%{name}/%{name}-%{version}.tar.gz
+# Source0-md5:	1871af2453d6e464034968a0fbcb2bfc
 Source1:	http://smarden.org/pape/djb/manpages/%{name}-%{version}-man.tar.gz
+# Source1-md5:	2d3858a48f293c87202f76cd883438ee
 Source2:	%{name}.sysconfig
 Source3:	%{name}.init
 Patch0:		%{name}-glibc.patch
