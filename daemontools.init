@@ -52,8 +52,8 @@ case "$1" in
         if [ -f /var/lock/subsys/svscan ]; then
 		msg_stopping svscan
 		killproc svscan
-		svc -d -x /var/run/service/* \
-			$(find /var/run/service/* -maxdepth 0 -follow -perm -1000|sed s-\$-/log-)
+		svc -d -x $SVSCAN_DIR/* \
+			$(find $SVSCAN_DIR/* -maxdepth 0 -follow -perm -1000|sed s-\$-/log-)
 		rm -f /var/run/svscan.pid /var/lock/subsys/svscan >/dev/null 2>&1
 	else
 		msg_Not_Running svscan
