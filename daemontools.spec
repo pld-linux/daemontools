@@ -10,6 +10,7 @@ Source1:	http://smarden.org/pape/djb/manpages/%{name}-%{version}-man.tar.gz
 Source2:	%{name}.sysconfig
 Source3:	%{name}.init
 Patch0:		%{name}-glibc.patch
+URL:		http://cr.yp.to/daemontools.html
 Prereq:		/sbin/chkconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
