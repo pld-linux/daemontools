@@ -9,6 +9,7 @@ Source0:	http://cr.yp.to/%{name}/%{name}-%{version}.tar.gz
 Source1:	ftp://ftp.innominate.org/pub/pape/djb/%{name}-%{version}-man.tar.gz
 Source2:	%{name}.sysconfig
 Source3:        %{name}.init
+Patch0:		daemontools-time.patch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -27,6 +28,7 @@ tries again, without losing any data.
 tar zxf %{SOURCE1}
 
 %setup -q
+%patch0 -p1
 
 %build
 echo %{_bindir} >conf-home
