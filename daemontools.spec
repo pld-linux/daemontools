@@ -3,7 +3,7 @@ Summary(pl):	daemontools D. J. Bernstein
 Name:		daemontools
 Version:	0.76
 Release:	1
-License:	Public Domain
+License:	DJB http://cr.yp.to/distributors.html
 Group:		Networking/Admin
 Source0:	http://cr.yp.to/%{name}/%{name}-%{version}.tar.gz
 Source1:	http://smarden.org/pape/djb/manpages/%{name}-%{version}-man.tar.gz
