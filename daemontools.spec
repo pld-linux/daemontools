@@ -1,15 +1,15 @@
 Summary:	D. J. Bernstein daemontools
 Summary(pl):	daemontools D. J. Bernstein
 Name:		daemontools
-Version:	0.70
-Release:	6
-License:	D. J. Bernstein
+Version:	0.76
+Release:	1
+License:	Public Domain
 Group:		Networking/Admin
 Source0:	http://cr.yp.to/%{name}/%{name}-%{version}.tar.gz
-Source1:	ftp://ftp.innominate.org/pub/pape/djb/%{name}-%{version}-man.tar.gz
+Source1:	http://smarden.org/pape/djb/manpages/%{name}-%{version}-man.tar.gz
 Source2:	%{name}.sysconfig
 Source3:	%{name}.init
-Patch0:		%{name}-time.patch
+Patch0:		%{name}-glibc.patch
 Prereq:		/sbin/chkconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -40,15 +40,18 @@ lub wy³±cza linie pasuj±ce do okre¶lonych wzorców. Automatycznie robi
 rotating logów do limitu miejsca na dysku. Je¿eli dysk jest
 zape³niony, robi pauzê i próbuje ponownie, bez strat danych.
 
-%prep
-%setup -q
-%patch0 -p1
+%prep 
+%setup -q -n admin/%{name}-%{version}
+cd src
+%patch1 
+cd ..
+
 tar zxf %{SOURCE1}
 
 %build
-echo %{_bindir} >conf-home
+echo %{_sbindir} > src/conf-home
 
-%{__make}
+package/compile
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -56,10 +59,18 @@ install -d $RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man8} \
 	$RPM_BUILD_ROOT%{_sysconfdir}/{rc.d/init.d,sysconfig} \
 	$RPM_BUILD_ROOT/var/lib/service $RPM_BUILD_ROOT/service
 
-install envdir envuidgid fghack multilog setlock setuidgid softlimit \
-	supervise svc svok svscan svstat tai64n tai64nlocal \
+# install binaries
+cd command
+install envdir envuidgid fghack multilog pgrphack \
+	readproctitle setlock setuidgid softlimit \
+	supervise svc svok svscan svscanboot svstat tai64n tai64nlocal \
 	$RPM_BUILD_ROOT%{_sbindir}
-install %{name}-%{version}-man/*.8* $RPM_BUILD_ROOT%{_mandir}/man8
+cd ..
+
+# install manuals
+install %{name}-man/*.8* $RPM_BUILD_ROOT%{_mandir}/man8
+
+# install rc & sysconfig files
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/svscan
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/svscan
 
@@ -84,7 +95,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc CHANGES README TODO
+%doc package/README
 %attr(755,root,root) %{_sbindir}/*
 %attr(700,root,root) /service
 %attr(700,root,root) /var/lib/service
