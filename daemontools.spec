@@ -30,13 +30,14 @@ tries again, without losing any data.
 daemontools jest zestawem narzêdzi do zarz±dzania servisami UNIX'owymi
 
 supervise monitoruje servisy. Startuje servisy i restartuje je, gdy
-"umr±". Ustawienie nowego servisu jest proste: wszystko czego supervise
-potrzebuje to katalog ze skryptami startowymi, które startuj± servisy.
+"umr±". Ustawienie nowego servisu jest proste: wszystko czego
+supervise potrzebuje to katalog ze skryptami startowymi, które
+startuj± servisy.
 
 multilog zapisuje komunikaty o b³êdach do jednego lub wiêcej log'u.
 Opcjonalnie stempluje ka¿d± liniê dat± oraz, w ka¿dym logu, do³±cza
-lub wy³±cza linie pasuj±ce do okre¶lonych wzorców. Automatycznie 
-robi rotating logów do limitu miejsca na dysku. Je¿eli dysk jest 
+lub wy³±cza linie pasuj±ce do okre¶lonych wzorców. Automatycznie robi
+rotating logów do limitu miejsca na dysku. Je¿eli dysk jest
 zape³niony, robi pauzê i próbuje ponownie, bez strat danych.
 
 %prep
