@@ -2,7 +2,7 @@ Summary:	D. J. Bernstein daemontools
 Summary(pl):	daemontools'y D. J. Bernstein'a
 Name:		daemontools
 Version:	0.70
-Release:	3
+Release:	4
 Copyright:	D. J. Bernstein
 Group:		Networking/Admin
 Group(de):	Netzwerkwesen/Administration
