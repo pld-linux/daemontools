@@ -1,0 +1,2 @@
+# location of svscan service (directory):
+SVSCAN_DIR="/var/run/service"

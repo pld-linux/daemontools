@@ -1,0 +1,74 @@
+#!/bin/sh
+#
+# svscan	svscan (scan and run services)
+#
+# chkconfig:	345 66 45
+#
+# description:	svscan (scan and run services) is a server part of the daemontools suite.
+#
+# id:		$Id$
+#
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+# Get network config
+. /etc/sysconfig/network
+
+# Get service config
+[ -f /etc/sysconfig/svscan ] && . /etc/sysconfig/svscan
+
+# Check that networking is up.
+if is_no "${NETWORKING}"; then
+        msg_Network_Down svscan
+        exit 1
+fi
+			
+
+# See how we were called.
+case "$1" in
+  start)
+	# Check if the service is already running?
+	if [ ! -f /var/lock/subsys/svscan ]; then
+		msg_starting svscan; busy
+		# we can't get status report from background job
+                # but we can only do simple file check
+		if [ -w $SVSCAN_DIR ]; then
+			svscan $SVSCAN_DIR &
+			ok
+			RETVAL=0
+		else
+			fail
+			echo "Missing service directory!"
+			echo "Create $SVSCAN_DIR first."
+	                RETVAL=1
+                fi
+		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/svscan
+	else
+		msg_Already_Running svscan
+	fi
+	;;
+  stop)
+        if [ -f /var/lock/subsys/service ]; then
+		msg_stopping svscan
+		killproc svscan
+		rm -f /var/run/svscan.pid /var/lock/subsys/svscan >/dev/null 2>&1
+	else
+		msg_Not_Running svscan
+		exit 1
+	fi	
+	;;
+  restart)
+	$0 stop
+	$0 start
+	;;
+  status)
+	status svscan
+	exit $?
+	;;
+  *)
+	msg_Usage "$0 {start|stop|status|restart}"
+	exit 1
+esac
+
+exit $RETVAL
