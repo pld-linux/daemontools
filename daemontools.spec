@@ -5,7 +5,7 @@ Release:	1
 Copyright:	D. J. Bernstein
 Group:		Networking/Admin
 Source: 	ftp://koobera.math.uic.edu/www/software/daemontools-0.53.tar.gz
-Buildroot: 	/tmp/%{name}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 supervise monitors a service. It starts the service and restarts the
@@ -30,7 +30,6 @@ stderr to a file.
 setuser runs a program under a user's uid and gid. Unlike su, setuser
 does not gain privileges; it does not check passwords, and it cannot be
 run except by root.
-
 
 %prep
 %setup -q
