@@ -1,9 +1,9 @@
 Summary:	D. J. Bernstein daemontools
-Summary(pl):	daemontools D. J. Bernstein
+Summary(pl):	daemontools D. J. Bernsteina
 Name:		daemontools
 Version:	0.76
 Release:	1
-License:	DJB http://cr.yp.to/distributors.html
+License:	DJB (http://cr.yp.to/distributors.html)
 Group:		Networking/Admin
 Source0:	http://cr.yp.to/%{name}/%{name}-%{version}.tar.gz
 Source1:	http://smarden.org/pape/djb/manpages/%{name}-%{version}-man.tar.gz
@@ -11,8 +11,11 @@ Source2:	%{name}.sysconfig
 Source3:	%{name}.init
 Patch0:		%{name}-glibc.patch
 URL:		http://cr.yp.to/daemontools.html
-Prereq:		/sbin/chkconfig
+Requires(post,preun):	/sbin/chkconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+# /etc/service or /var/lib/service? (also in .sysconfig)
+%define		servicedir	/service
 
 %description
 daemontools is a collection of tools for managing UNIX services.
@@ -28,48 +31,46 @@ the amount of disk space used. If the disk fills up, it pauses and
 tries again, without losing any data.
 
 %description -l pl
-daemontools jest zestawem narzêdzi do zarz±dzania servisami UNIX'owymi
+daemontools to zestaw narzêdzi do zarz±dzania us³ugami uniksowymi.
 
-supervise monitoruje servisy. Startuje servisy i restartuje je, gdy
-"umr±". Ustawienie nowego servisu jest proste: wszystko czego
-supervise potrzebuje to katalog ze skryptami startowymi, które
-startuj± servisy.
+supervise monitoruje us³ugi. Startuje us³ugi i restartuje je, gdy
+umr±. Ustawienie nowej us³ugi jest proste: wszystko czego supervise
+potrzebuje to katalog ze skryptami startowymi, które startuj± us³ugi.
 
-multilog zapisuje komunikaty o b³êdach do jednego lub wiêcej log'u.
-Opcjonalnie stempluje ka¿d± liniê dat± oraz, w ka¿dym logu, do³±cza
-lub wy³±cza linie pasuj±ce do okre¶lonych wzorców. Automatycznie robi
-rotating logów do limitu miejsca na dysku. Je¿eli dysk jest
-zape³niony, robi pauzê i próbuje ponownie, bez strat danych.
+multilog zapisuje komunikaty o b³êdach do jednego lub wiêkszej liczby
+plików logów. Opcjonalnie oznacza ka¿d± liniê dat± oraz, w ka¿dym
+logu, do³±cza lub pomija linie pasuj±ce do okre¶lonych wzorców.
+Automatycznie wykonuje rotacjê logów do limitu miejsca na dysku.
+Je¿eli dysk jest zape³niony, pauzuje i próbuje ponownie, bez strat
+danych.
 
-%prep 
-%setup -q -n admin/%{name}-%{version}
-cd src
-%patch0
-cd ..
-
-tar zxf %{SOURCE1}
+%prep
+%setup -q -n admin -a1
+cd %{name}-%{version}/src
+%patch0 -p0
 
 %build
-echo %{_sbindir} > src/conf-home
+cd %{name}-%{version}
+echo "%{__cc} %{rpmcflags} -Wall" >src/conf-cc
+echo "%{__cc} %{rpmldflags}" >src/conf-ld
 
 package/compile
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man8} \
-	$RPM_BUILD_ROOT%{_sysconfdir}/{rc.d/init.d,sysconfig} \
-	$RPM_BUILD_ROOT/var/lib/service $RPM_BUILD_ROOT/service
+	$RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig} \
+	$RPM_BUILD_ROOT{/var/lib/service,%{servicedir}}
+
+# install manuals
+install %{name}-man/*.8* $RPM_BUILD_ROOT%{_mandir}/man8
 
 # install binaries
-cd command
+cd %{name}-%{version}/command
 install envdir envuidgid fghack multilog pgrphack \
 	readproctitle setlock setuidgid softlimit \
 	supervise svc svok svscan svscanboot svstat tai64n tai64nlocal \
 	$RPM_BUILD_ROOT%{_sbindir}
-cd ..
-
-# install manuals
-install %{name}-man/*.8* $RPM_BUILD_ROOT%{_mandir}/man8
 
 # install rc & sysconfig files
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/svscan
@@ -96,9 +97,9 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc package/README
+%doc %{name}-%{version}/{package/README,src/{CHANGES,TODO}}
 %attr(755,root,root) %{_sbindir}/*
-%attr(700,root,root) /service
+%attr(700,root,root) %{servicedir}
 %attr(700,root,root) /var/lib/service
 %attr(754,root,root) /etc/rc.d/init.d/svscan
 %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/svscan
