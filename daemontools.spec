@@ -63,8 +63,6 @@ install %{name}-%{version}-man/*.8* $RPM_BUILD_ROOT%{_mandir}/man8
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/svscan
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/svscan
 
-gzip -9nf CHANGES README TODO
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -86,7 +84,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz
+%doc CHANGES README TODO
 %attr(755,root,root) %{_sbindir}/*
 %attr(700,root,root) /service
 %attr(700,root,root) /var/lib/service
