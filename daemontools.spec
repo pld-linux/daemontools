@@ -1,13 +1,12 @@
-$Revision: 1.1 $
-Summary: DJB daemontools
-Name: daemontools
-Version: 0.53
-Release: 1
-Copyright: D. J. Bernstein
-Group: Networking/Admin
-Source: ftp://koobera.math.uic.edu/www/software/daemontools-0.53.tar.gz
-Patch0: daemontools-0.53.redhat.patch
-Buildroot: /var/tmp/daemontools-root
+# $Revision: 1.2 $
+Summary:	DJB daemontools
+Name:		daemontools
+Version:	0.53
+Release:	1
+Copyright:	D. J. Bernstein
+Group:		Networking/Admin
+Source: 	ftp://koobera.math.uic.edu/www/software/daemontools-0.53.tar.gz
+Buildroot: 	/tmp/%{name}-root
 
 %description
 supervise monitors a service. It starts the service and restarts the
@@ -35,42 +34,37 @@ run except by root.
 
 
 %prep
-%setup
-%patch0 -p1
+%setup -q
 
 %build
+echo %{_bindir} >conf-bin
+echo %{_mandir} >conf-man
+
 make; make man
 
 %install
-mkdir -p $RPM_BUILD_ROOT/usr/{bin,man/man1}
-install -s -m 755 accustamp cyclog errorsto fifo supervise svc svstat tailocal testfilelock usually $RPM_BUILD_ROOT/usr/bin
-install -s -m 700 setuser $RPM_BUILD_ROOT/usr/bin
-install -m 644 accustamp.1 cyclog.1 errorsto.1 fifo.1 setuser.1 supervise.1 svc.1 svstat.1 tailocal.1 testfilelock.1 usually.1 $RPM_BUILD_ROOT/usr/man/man1
+install -d		$RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1}
+
+install accustamp	$RPM_BUILD_ROOT%{_bindir}
+install cyclog 		$RPM_BUILD_ROOT%{_bindir}
+install errorsto	$RPM_BUILD_ROOT%{_bindir}
+install fifo		$RPM_BUILD_ROOT%{_bindir}
+install supervise	$RPM_BUILD_ROOT%{_bindir}
+install svc		$RPM_BUILD_ROOT%{_bindir}
+install svstat		$RPM_BUILD_ROOT%{_bindir}
+install tailocal	$RPM_BUILD_ROOT%{_bindir}
+install testfilelock	$RPM_BUILD_ROOT%{_bindir}
+install usually		$RPM_BUILD_ROOT%{_bindir}
+install setuser		$RPM_BUILD_ROOT%{_bindir}
+install *.1 		$RPM_BUILD_ROOT%{_mandir}/man1
+
+gzip -9nf BLURB CHANGES INSTALL README THANKS TODO VERSION $RPM_BUILD_ROOT%{_mandir}/man1/*.1
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
-%doc BLURB CHANGES INSTALL README THANKS TODO VERSION
-/usr/bin/accustamp
-/usr/bin/cyclog
-/usr/bin/errorsto
-/usr/bin/fifo
-/usr/bin/supervise
-/usr/bin/svc
-/usr/bin/svstat
-/usr/bin/tailocal
-/usr/bin/testfilelock
-/usr/bin/usually
-/usr/bin/setuser
-/usr/man/man1/accustamp.1
-/usr/man/man1/cyclog.1
-/usr/man/man1/errorsto.1
-/usr/man/man1/fifo.1
-/usr/man/man1/setuser.1
-/usr/man/man1/supervise.1
-/usr/man/man1/svc.1
-/usr/man/man1/svstat.1
-/usr/man/man1/tailocal.1
-/usr/man/man1/testfilelock.1
-/usr/man/man1/usually.1
+%defattr(644,root,root,755)
+%doc {BLURB,CHANGES,INSTALL,README,THANKS,TODO,VERSION}.gz
+%attr(644,root,root) %{_mandir}/*
+%attr(755,root,root) %{_bindir}/*
