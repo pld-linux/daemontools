@@ -39,8 +39,8 @@ case "$1" in
 		# we can't get status report from background job
 		# but we can only do simple file check
 		if [ -w $SVSCAN_DIR ]; then
-			svscan $SVSCAN_DIR &
-			ok
+			daemon --fork svscan $SVSCAN_DIR
+			RETVAL=$?
 		else
 			fail
 			echo $(nls "Missing service directory")'!'
