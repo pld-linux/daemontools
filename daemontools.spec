@@ -2,7 +2,7 @@ Summary:	D. J. Bernstein daemontools
 Summary(pl):	daemontools D. J. Bernsteina
 Name:		daemontools
 Version:	0.76
-Release:	2
+Release:	2.1
 License:	DJB (http://cr.yp.to/distributors.html)
 Group:		Networking/Admin
 Source0:	http://cr.yp.to/%{name}/%{name}-%{version}.tar.gz
@@ -14,6 +14,7 @@ Source3:	%{name}.init
 Source4:	%{name}-tcprules
 Patch0:		%{name}-glibc.patch
 URL:		http://cr.yp.to/daemontools.html
+PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
 # make and stat from coreutils are for building tcprules
 Requires:	make
