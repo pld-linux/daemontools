@@ -113,5 +113,5 @@ fi
 %{tcprules}
 %attr(700,root,root) /var/lib/service
 %attr(754,root,root) /etc/rc.d/init.d/svscan
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/svscan
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/svscan
 %{_mandir}/man8/*
