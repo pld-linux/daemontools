@@ -5,7 +5,7 @@ Version:	0.76
 Release:	3
 License:	DJB (http://cr.yp.to/distributors.html)
 Group:		Networking/Admin
-Source0:	http://cr.yp.to/%{name}/%{name}-%{version}.tar.gz
+Source0:	http://cr.yp.to/daemontools/%{name}-%{version}.tar.gz
 # Source0-md5:	1871af2453d6e464034968a0fbcb2bfc
 Source1:	http://smarden.org/pape/djb/manpages/%{name}-%{version}-man.tar.gz
 # Source1-md5:	2d3858a48f293c87202f76cd883438ee
@@ -14,7 +14,7 @@ Source3:	%{name}.init
 Source4:	%{name}-tcprules
 Patch0:		%{name}-glibc.patch
 URL:		http://cr.yp.to/daemontools.html
-PreReq:		rc-scripts
+Requires:	rc-scripts
 Requires(post,preun):	/sbin/chkconfig
 # make and stat from coreutils are for building tcprules
 Requires:	make
@@ -113,5 +113,5 @@ fi
 %{tcprules}
 %attr(700,root,root) /var/lib/service
 %attr(754,root,root) /etc/rc.d/init.d/svscan
-%config(noreplace) %verify(not size mtime md5) /etc/sysconfig/svscan
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/svscan
 %{_mandir}/man8/*
