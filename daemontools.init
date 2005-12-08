@@ -2,7 +2,7 @@
 #
 # svscan	svscan (scan and run services)
 #
-# chkconfig:	345 14 89	
+# chkconfig:	345 14 89
 #
 # description:	svscan (scan and run services) is a server part of the daemontools suite.
 #
@@ -27,7 +27,7 @@ if is_yes "${NETWORKING}"; then
 else
 	exit 0
 fi
-			
+
 RETVAL=0
 # See how we were called.
 case "$1" in
@@ -61,7 +61,7 @@ case "$1" in
 		rm -f /var/run/svscan.pid /var/lock/subsys/svscan >/dev/null 2>&1
 	else
 		msg_not_running svscan
-	fi	
+	fi
 	;;
   restart|force-reload)
 	$0 stop
