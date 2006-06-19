@@ -1,0 +1,4 @@
+- changed prep so clean works now (no slashes in %setup -n)
+- use optflags, use macro for service directory
+  (to be changed for FHS compatibility? we cannot distrubute binaries anyway)
+- more specific Requires, pl fixes
