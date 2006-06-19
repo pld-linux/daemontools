@@ -2,7 +2,7 @@ Summary:	D. J. Bernstein daemontools
 Summary(pl):	daemontools D. J. Bernsteina
 Name:		daemontools
 Version:	0.76
-Release:	3
+Release:	4
 License:	DJB (http://cr.yp.to/distributors.html)
 Group:		Networking/Admin
 Source0:	http://cr.yp.to/daemontools/%{name}-%{version}.tar.gz
@@ -14,11 +14,13 @@ Source3:	%{name}.init
 Source4:	%{name}-tcprules
 Patch0:		%{name}-glibc.patch
 URL:		http://cr.yp.to/daemontools.html
-Requires:	rc-scripts
+BuildRequires:	rpmbuild(macros) >= 1.268
 Requires(post,preun):	/sbin/chkconfig
+Requires:	/sbin/chkconfig
+Requires:	rc-scripts
 # make and stat from coreutils are for building tcprules
-Requires:	make
 Requires:	coreutils
+Requires:	make
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # /etc/service or /var/lib/service? (also in .sysconfig)
@@ -91,17 +93,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/chkconfig --add svscan
-if [ -f /var/lock/subsys/svscan ]; then
-	/etc/rc.d/init.d/svscan restart >&2
-else
-	echo "Execute \"/etc/rc.d/init.d/svscan start\" to start svscan daemon."
-fi
+%service svscan restart
 
 %preun
 if [ "$1" = "0" ]; then
-	if [ -f /var/lock/subsys/svscan ]; then
-		/etc/rc.d/init.d/svscan stop >&2
-	fi
+	%service svscan stop
 	/sbin/chkconfig --del svscan
 fi
 
