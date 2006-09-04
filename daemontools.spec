@@ -2,7 +2,7 @@ Summary:	D. J. Bernstein daemontools
 Summary(pl):	daemontools D. J. Bernsteina
 Name:		daemontools
 Version:	0.76
-Release:	4
+Release:	5
 License:	DJB (http://cr.yp.to/distributors.html)
 Group:		Networking/Admin
 Source0:	http://cr.yp.to/daemontools/%{name}-%{version}.tar.gz
@@ -70,6 +70,7 @@ package/compile
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man8} \
 	$RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig} \
+	$RPM_BUILD_ROOT%{_sysconfdir}/supervise \
 	$RPM_BUILD_ROOT{/var/lib/service,%{servicedir},%{tcprules}}
 
 # install manuals
@@ -106,6 +107,7 @@ fi
 %doc %{name}-%{version}/{package/README,src/{CHANGES,TODO}}
 %attr(755,root,root) %{_sbindir}/*
 %attr(700,root,root) %{servicedir}
+%dir %{_sysconfdir}/supervise
 %{tcprules}
 %attr(700,root,root) /var/lib/service
 %attr(754,root,root) /etc/rc.d/init.d/svscan
