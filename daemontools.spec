@@ -1,5 +1,5 @@
 Summary:	D. J. Bernstein daemontools
-Summary(pl.UTF-8):   daemontools D. J. Bernsteina
+Summary(pl.UTF-8):	daemontools D. J. Bernsteina
 Name:		daemontools
 Version:	0.76
 Release:	5
