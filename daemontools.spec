@@ -1,5 +1,5 @@
 Summary:	D. J. Bernstein daemontools
-Summary(pl):	daemontools D. J. Bernsteina
+Summary(pl.UTF-8):   daemontools D. J. Bernsteina
 Name:		daemontools
 Version:	0.76
 Release:	5
@@ -40,18 +40,18 @@ matching specified patterns. It automatically rotates logs to limit
 the amount of disk space used. If the disk fills up, it pauses and
 tries again, without losing any data.
 
-%description -l pl
-daemontools to zestaw narzêdzi do zarz±dzania us³ugami uniksowymi.
+%description -l pl.UTF-8
+daemontools to zestaw narzÄ™dzi do zarzÄ…dzania usÅ‚ugami uniksowymi.
 
-supervise monitoruje us³ugi. Startuje us³ugi i restartuje je, gdy
-umr±. Ustawienie nowej us³ugi jest proste: wszystko czego supervise
-potrzebuje to katalog ze skryptami startowymi, które startuj± us³ugi.
+supervise monitoruje usÅ‚ugi. Startuje usÅ‚ugi i restartuje je, gdy
+umrÄ…. Ustawienie nowej usÅ‚ugi jest proste: wszystko czego supervise
+potrzebuje to katalog ze skryptami startowymi, ktÃ³re startujÄ… usÅ‚ugi.
 
-multilog zapisuje komunikaty o b³êdach do jednego lub wiêkszej liczby
-plików logów. Opcjonalnie oznacza ka¿d± liniê dat± oraz, w ka¿dym
-logu, do³±cza lub pomija linie pasuj±ce do okre¶lonych wzorców.
-Automatycznie wykonuje rotacjê logów do limitu miejsca na dysku.
-Je¿eli dysk jest zape³niony, pauzuje i próbuje ponownie, bez strat
+multilog zapisuje komunikaty o bÅ‚Ä™dach do jednego lub wiÄ™kszej liczby
+plikÃ³w logÃ³w. Opcjonalnie oznacza kaÅ¼dÄ… liniÄ™ datÄ… oraz, w kaÅ¼dym
+logu, doÅ‚Ä…cza lub pomija linie pasujÄ…ce do okreÅ›lonych wzorcÃ³w.
+Automatycznie wykonuje rotacjÄ™ logÃ³w do limitu miejsca na dysku.
+JeÅ¼eli dysk jest zapeÅ‚niony, pauzuje i prÃ³buje ponownie, bez strat
 danych.
 
 %prep
