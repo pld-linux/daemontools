@@ -6,7 +6,7 @@
 #
 # description:	svscan (scan and run services) is a server part of the daemontools suite.
 #
-# id:		$Id$
+# $Id$
 #
 
 # Source function library
@@ -39,7 +39,7 @@ case "$1" in
 		# we can't get status report from background job
 		# but we can only do simple file check
 		if [ -w $SVSCAN_DIR ]; then
-			daemon --fork svscan $SVSCAN_DIR
+			daemon --fork /usr/sbin/svscan $SVSCAN_DIR
 			RETVAL=$?
 		else
 			fail
