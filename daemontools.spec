@@ -2,8 +2,8 @@ Summary:	D. J. Bernstein daemontools
 Summary(pl.UTF-8):	daemontools D. J. Bernsteina
 Name:		daemontools
 Version:	0.76
-Release:	5
-License:	DJB (http://cr.yp.to/distributors.html)
+Release:	6
+License:	Public Domain
 Group:		Networking/Admin
 Source0:	http://cr.yp.to/daemontools/%{name}-%{version}.tar.gz
 # Source0-md5:	1871af2453d6e464034968a0fbcb2bfc
@@ -17,6 +17,8 @@ URL:		http://cr.yp.to/daemontools.html
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires(post,preun):	/sbin/chkconfig
 Requires:	/sbin/chkconfig
+# initscript uses find
+Requires:	findutils
 Requires:	rc-scripts
 # make and stat from coreutils are for building tcprules
 Requires:	coreutils
