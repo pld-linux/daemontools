@@ -2,7 +2,7 @@ Summary:	D. J. Bernstein daemontools
 Summary(pl.UTF-8):	daemontools D. J. Bernsteina
 Name:		daemontools
 Version:	0.76
-Release:	6
+Release:	7
 License:	Public Domain
 Group:		Networking/Admin
 Source0:	http://cr.yp.to/daemontools/%{name}-%{version}.tar.gz
