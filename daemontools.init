@@ -57,11 +57,21 @@ stop() {
 		svc=$(echo $SVSCAN_DIR/*)
 		if [ "$svc" != "$SVSCAN_DIR/*" ]; then
 			svc -d -x $SVSCAN_DIR/* \
-				$(find $SVSCAN_DIR/* -maxdepth 0 -follow -perm -1000|sed s-\$-/log-)
+				$(find $SVSCAN_DIR/* -maxdepth 0 -follow -perm -1000 | sed -e 's-\$-/log-')
 		fi
 		rm -f /var/run/svscan.pid /var/lock/subsys/svscan >/dev/null 2>&1
 	else
 		msg_not_running svscan
+	fi
+}
+
+condrestart() {
+	if [ -f /var/lock/subsys/svscan ]; then
+		stop
+		start
+	else
+		msg_not_running svscan
+		RETVAL=$1
 	fi
 }
 
@@ -78,12 +88,18 @@ case "$1" in
 	stop
 	start
 	;;
+  try-restart)
+	condrestart 0
+	;;
+  force-reload)
+	condrestart 7
+	;;
   status)
 	status svscan
 	exit $?
 	;;
   *)
-	msg_usage "$0 {start|stop|restart|force-reload|status}"
+	msg_usage "$0 {start|stop|restart|try-restart|force-reload|status}"
 	exit 3
 esac
 
