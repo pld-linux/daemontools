@@ -53,7 +53,7 @@ stop() {
 	if [ -f /var/lock/subsys/svscan ]; then
 		msg_stopping svscan
 		killproc svscan
-		for s in $SVSCAN_DIR/{,*/}*/run; do
+		for s in $SVSCAN_DIR/*{,/log}/run; do
 			if [ -x "$s" ]; then
 				svc="$svc ${s%/run}"
 			fi
