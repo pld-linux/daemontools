@@ -57,7 +57,7 @@ stop() {
 		svc=$(echo $SVSCAN_DIR/*)
 		if [ "$svc" != "$SVSCAN_DIR/*" ]; then
 			svc -d -x $SVSCAN_DIR/* \
-				$(find $SVSCAN_DIR/* -maxdepth 0 -follow -perm -1000 | sed -e 's-\$-/log-')
+				$(find $SVSCAN_DIR/* -maxdepth 0 -follow -perm -1000 | sed -e 's,$,/log,')
 		fi
 		rm -f /var/run/svscan.pid /var/lock/subsys/svscan >/dev/null 2>&1
 	else
