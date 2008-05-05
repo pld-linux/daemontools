@@ -96,7 +96,9 @@ case "$1" in
 	;;
   status)
 	status svscan
-	exit $?
+	RETVAL=$?
+	svstat $SVSCAN_DIR/*
+	RETVAL=$(($RETVAL + $?))
 	;;
   *)
 	msg_usage "$0 {start|stop|restart|try-restart|force-reload|status}"
