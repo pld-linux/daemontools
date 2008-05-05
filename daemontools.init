@@ -31,7 +31,7 @@ fi
 start() {
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/svscan ]; then
-		msg_starting svscan;
+		msg_starting svscan
 		busy
 		# we can't get status report from background job
 		# but we can only do simple file check
@@ -40,8 +40,7 @@ start() {
 			RETVAL=$?
 		else
 			fail
-			echo $(nls "Missing service directory")'!'
-			nls "Create %s first." "$SVSCAN_DIR"
+			nls "Missing service directory. Create %s first." "$SVSCAN_DIR"
 			RETVAL=1
 		fi
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/svscan
@@ -54,10 +53,13 @@ stop() {
 	if [ -f /var/lock/subsys/svscan ]; then
 		msg_stopping svscan
 		killproc svscan
-		svc=$(echo $SVSCAN_DIR/*)
-		if [ "$svc" != "$SVSCAN_DIR/*" ]; then
-			svc -d -x $SVSCAN_DIR/* \
-				$(find $SVSCAN_DIR/* -maxdepth 0 -follow -perm -1000 | sed -e 's,$,/log,')
+		for s in $SVSCAN_DIR/{,*/}*/run; do
+			if [ -x "$s" ]; then
+				svc="$svc ${s%/run}"
+			fi
+		done
+		if [ "$svc" ]; then
+			svc -d -x $svc
 		fi
 		rm -f /var/run/svscan.pid /var/lock/subsys/svscan >/dev/null 2>&1
 	else
