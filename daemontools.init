@@ -32,51 +32,54 @@ fi
 
 start() {
 	# Check if the service is already running?
-	if [ ! -f /var/lock/subsys/svscan ]; then
-		msg_starting svscan
-		busy
-		# we can't get status report from background job
-		# but we can only do simple file check
-		if [ -w $SVSCAN_DIR ]; then
-			daemon --fork /usr/sbin/svscan $SVSCAN_DIR
-			RETVAL=$?
-		else
-			fail
-			nls "Missing service directory. Create %s first." "$SVSCAN_DIR"
-			RETVAL=1
-		fi
-		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/svscan
-	else
+	if [ -f /var/lock/subsys/svscan ]; then
 		msg_already_running svscan
+		return
 	fi
+
+	msg_starting svscan
+	busy
+	# we can't get status report from background job
+	# but we can only do simple file check
+	if [ -w $SVSCAN_DIR ]; then
+		daemon --fork /usr/sbin/svscan $SVSCAN_DIR
+		RETVAL=$?
+	else
+		fail
+		nls "Missing service directory. Create %s first." "$SVSCAN_DIR"
+		RETVAL=1
+	fi
+	[ $RETVAL -eq 0 ] && touch /var/lock/subsys/svscan
 }
 
 stop() {
-	if [ -f /var/lock/subsys/svscan ]; then
-		msg_stopping svscan
-		killproc svscan
-		for s in $SVSCAN_DIR/*{,/log}/run; do
-			if [ -x "$s" ]; then
-				svc="$svc ${s%/run}"
-			fi
-		done
-		if [ "$svc" ]; then
-			svc -d -x $svc
-		fi
-		rm -f /var/run/svscan.pid /var/lock/subsys/svscan >/dev/null 2>&1
-	else
+	if [ ! -f /var/lock/subsys/svscan ]; then
 		msg_not_running svscan
+		return
 	fi
+
+	msg_stopping svscan
+	killproc svscan
+	for s in $SVSCAN_DIR/*{,/log}/run; do
+		if [ -x "$s" ]; then
+			svc="$svc ${s%/run}"
+		fi
+	done
+	if [ "$svc" ]; then
+		svc -d -x $svc
+	fi
+	rm -f /var/run/svscan.pid /var/lock/subsys/svscan >/dev/null 2>&1
 }
 
 condrestart() {
-	if [ -f /var/lock/subsys/svscan ]; then
-		stop
-		start
-	else
+	if [ ! -f /var/lock/subsys/svscan ]; then
 		msg_not_running svscan
 		RETVAL=$1
+		return
 	fi
+
+	stop
+	start
 }
 
 RETVAL=0
