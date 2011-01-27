@@ -12,6 +12,8 @@
 # Source function library
 . /etc/rc.d/init.d/functions
 
+upstart_controlled --except status
+
 # Get network config
 . /etc/sysconfig/network
 

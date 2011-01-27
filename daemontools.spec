@@ -2,7 +2,7 @@ Summary:	D. J. Bernstein daemontools
 Summary(pl.UTF-8):	daemontools D. J. Bernsteina
 Name:		daemontools
 Version:	0.76
-Release:	9
+Release:	10
 License:	Public Domain
 Group:		Networking/Admin
 Source0:	http://cr.yp.to/daemontools/%{name}-%{version}.tar.gz
@@ -16,7 +16,7 @@ URL:		http://cr.yp.to/daemontools.html
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires(post,preun):	/sbin/chkconfig
 Requires:	/sbin/chkconfig
-Requires:	rc-scripts >= 0.4.0.10
+Requires:	rc-scripts >= 0.4.3.0
 Conflicts:	ucspi-tcp < 0.88-7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
