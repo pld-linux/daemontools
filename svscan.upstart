@@ -1,0 +1,27 @@
+description "svscan (scan and run services)"
+
+start on local-filesystems
+stop on pld.shutdown-started
+
+respawn
+console output
+
+env SVSCAN_DIR="/service"
+
+pre-start script
+	test -w "$SVSCAN_DIR"
+end script
+
+exec /usr/sbin/svscan $SVSCAN_DIR
+
+post-stop script
+	# bring everything down, svscan maybe forgot some
+	for s in $SVSCAN_DIR/*{,/log}/run; do
+		if [ -x "$s" ]; then
+			svc="$svc ${s%/run}"
+		fi
+	done
+	if [ "$svc" ]; then
+		svc -d -x $svc
+	fi
+end script
