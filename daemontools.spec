@@ -11,7 +11,7 @@ Source1:	http://smarden.org/pape/djb/manpages/%{name}-%{version}-man.tar.gz
 # Source1-md5:	2d3858a48f293c87202f76cd883438ee
 Source2:	%{name}.sysconfig
 Source3:	%{name}.init
-Source4:	%{name}.upstart
+Source4:	svscan.upstart
 Patch0:		%{name}-glibc.patch
 URL:		http://cr.yp.to/daemontools.html
 BuildRequires:	rpmbuild(macros) >= 1.268
@@ -82,7 +82,7 @@ install envdir envuidgid fghack multilog pgrphack \
 # install rc & sysconfig files
 cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/svscan
 install -p %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/svscan
-cp -p %{SOURCE4} $RPM_BUILD_ROOT/etc/init/svscan
+cp -p %{SOURCE4} $RPM_BUILD_ROOT/etc/init/svscan.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -100,11 +100,43 @@ fi
 %files
 %defattr(644,root,root,755)
 %doc package/README src/{CHANGES,TODO}
-%attr(755,root,root) %{_sbindir}/*
+%attr(755,root,root) %{_sbindir}/envdir
+%attr(755,root,root) %{_sbindir}/envuidgid
+%attr(755,root,root) %{_sbindir}/fghack
+%attr(755,root,root) %{_sbindir}/multilog
+%attr(755,root,root) %{_sbindir}/pgrphack
+%attr(755,root,root) %{_sbindir}/readproctitle
+%attr(755,root,root) %{_sbindir}/setlock
+%attr(755,root,root) %{_sbindir}/setuidgid
+%attr(755,root,root) %{_sbindir}/softlimit
+%attr(755,root,root) %{_sbindir}/supervise
+%attr(755,root,root) %{_sbindir}/svc
+%attr(755,root,root) %{_sbindir}/svok
+%attr(755,root,root) %{_sbindir}/svscan
+%attr(755,root,root) %{_sbindir}/svscanboot
+%attr(755,root,root) %{_sbindir}/svstat
+%attr(755,root,root) %{_sbindir}/tai64n
+%attr(755,root,root) %{_sbindir}/tai64nlocal
 %attr(700,root,root) %{servicedir}
 %dir %{_sysconfdir}/supervise
 %attr(700,root,root) /var/lib/service
 %attr(754,root,root) /etc/rc.d/init.d/svscan
 %config(noreplace) %verify(not md5 mtime size) /etc/init/svscan.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/svscan
-%{_mandir}/man8/*
+%{_mandir}/man8/envdir.8*
+%{_mandir}/man8/envuidgid.8*
+%{_mandir}/man8/fghack.8*
+%{_mandir}/man8/multilog.8*
+%{_mandir}/man8/pgrphack.8*
+%{_mandir}/man8/readproctitle.8*
+%{_mandir}/man8/setlock.8*
+%{_mandir}/man8/setuidgid.8*
+%{_mandir}/man8/softlimit.8*
+%{_mandir}/man8/supervise.8*
+%{_mandir}/man8/svc.8*
+%{_mandir}/man8/svok.8*
+%{_mandir}/man8/svscan.8*
+%{_mandir}/man8/svscanboot.8*
+%{_mandir}/man8/svstat.8*
+%{_mandir}/man8/tai64n.8*
+%{_mandir}/man8/tai64nlocal.8*
