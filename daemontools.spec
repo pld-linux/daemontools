@@ -16,7 +16,6 @@ Patch0:		%{name}-glibc.patch
 URL:		http://cr.yp.to/daemontools.html
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires(post,preun):	/sbin/chkconfig
-Requires:	/sbin/chkconfig
 Requires:	rc-scripts >= 0.4.3.0
 Conflicts:	ucspi-tcp < 0.88-7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
