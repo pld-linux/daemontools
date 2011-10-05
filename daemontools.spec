@@ -2,7 +2,7 @@ Summary:	D. J. Bernstein daemontools
 Summary(pl.UTF-8):	daemontools D. J. Bernsteina
 Name:		daemontools
 Version:	0.76
-Release:	10
+Release:	11
 License:	Public Domain
 Group:		Networking/Admin
 Source0:	http://cr.yp.to/daemontools/%{name}-%{version}.tar.gz
@@ -73,7 +73,7 @@ cp -p %{name}-man/*.8* $RPM_BUILD_ROOT%{_mandir}/man8
 
 # install binaries
 cd command
-install envdir envuidgid fghack multilog pgrphack \
+install -p envdir envuidgid fghack multilog pgrphack \
 	readproctitle setlock setuidgid softlimit \
 	supervise svc svok svscan svscanboot svstat tai64n tai64nlocal \
 	$RPM_BUILD_ROOT%{_sbindir}
