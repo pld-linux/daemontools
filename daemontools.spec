@@ -2,7 +2,7 @@ Summary:	D. J. Bernstein daemontools
 Summary(pl.UTF-8):	daemontools D. J. Bernsteina
 Name:		daemontools
 Version:	0.76
-Release:	12
+Release:	13
 License:	Public Domain
 Group:		Networking/Admin
 Source0:	http://cr.yp.to/daemontools/%{name}-%{version}.tar.gz
@@ -11,7 +11,6 @@ Source1:	http://smarden.org/pape/djb/manpages/%{name}-%{version}-man.tar.gz
 # Source1-md5:	2d3858a48f293c87202f76cd883438ee
 Source2:	%{name}.sysconfig
 Source3:	%{name}.init
-Source4:	svscan.upstart
 Patch0:		%{name}-glibc.patch
 URL:		http://cr.yp.to/daemontools.html
 BuildRequires:	rpmbuild(macros) >= 1.268
@@ -64,7 +63,7 @@ echo "%{__cc} %{rpmldflags}" > src/conf-ld
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man8} \
-	$RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig,init} \
+	$RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig} \
 	$RPM_BUILD_ROOT%{_sysconfdir}/supervise \
 	$RPM_BUILD_ROOT{/var/lib/service,%{servicedir}}
 
@@ -81,7 +80,6 @@ install -p envdir envuidgid fghack multilog pgrphack \
 # install rc & sysconfig files
 cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/svscan
 install -p %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/svscan
-cp -p %{SOURCE4} $RPM_BUILD_ROOT/etc/init/svscan.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -120,7 +118,6 @@ fi
 %dir %{_sysconfdir}/supervise
 %attr(700,root,root) /var/lib/service
 %attr(754,root,root) /etc/rc.d/init.d/svscan
-%config(noreplace) %verify(not md5 mtime size) /etc/init/svscan.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/svscan
 %{_mandir}/man8/envdir.8*
 %{_mandir}/man8/envuidgid.8*
